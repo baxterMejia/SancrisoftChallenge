@@ -4,6 +4,7 @@ declare module 'styled-components' {
   export interface DefaultTheme extends Theme {}
 }
 
+
 export const GlobalStyle = createGlobalStyle`
   /* Normal global styles */
   * {
@@ -13,10 +14,11 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    // Access theme properties directly, TypeScript now understands their types
-    background: ${({ theme }) => theme.bg || '#0f0f0f'};
-    color: ${({ theme }) => theme.text || '#fff'};
-    font-family: 'Segoe UI', sans-serif;
+    background: ${({ theme }) => theme.bg || '#ffffff'};
+    color: ${({ theme }) => theme.text || '#000000'};
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
     transition: background 0.3s ease, color 0.3s ease;
   }
 

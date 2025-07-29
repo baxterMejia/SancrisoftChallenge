@@ -11,7 +11,7 @@ import ThemeSidebar from '@/components/ThemeSidebar';
 import Footer from '@/components/Footer';
 import { UserProvider } from '../context/UserContext';
 import { Theme } from '@/themes/themes'; 
-
+import { inter } from '@/styles/fonts';
 
 interface StyledThemeProps {
   theme: Theme;
@@ -47,7 +47,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   const isAuthRoute = pathname.startsWith('/login');
 
   return (
-    <html lang="en">
+    <html lang="en" className={inter.className}>
       <body>
         <ThemeProvider>
           <UserProvider>

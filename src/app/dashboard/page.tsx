@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Icon as LucideIcon } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
 import { Theme } from '@/themes/themes';
+import NewCompanyForm from '@/components/NewCompanyForm/NewCompanyForm'; 
 
 interface StyledThemeProps {
   theme: Theme;
@@ -15,6 +16,15 @@ interface StyledThemeProps {
 const Background = styled.div<StyledThemeProps>`
   min-height: 100vh;
   padding: 2rem 4rem;
+
+  @media (max-width: 768px) {
+    padding: 2rem 0;
+  }
+  @media (max-width: 480px) {
+    padding: 1.5rem 0;
+    
+  }
+
   background: radial-gradient(
     circle at top left,
     ${({ theme }) => theme.bg},
@@ -22,15 +32,8 @@ const Background = styled.div<StyledThemeProps>`
     ${({ theme }) => theme.sidebarBg}
   );
   color: ${({ theme }) => theme.text};
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-  @media (max-width: 768px) {
-    padding: 1.5rem 2rem;
-  }
-  @media (max-width: 480px) {
-    padding: 1rem 1.5rem;
-  }
 `;
+
 
 const Header = styled(motion.h1)<StyledThemeProps>`
   font-size: 1.5rem;
@@ -142,16 +145,8 @@ export default function DashboardPage() {
   }, [isClient, router]);  
 
   return (
-    <Background theme={theme}>
-      <Header
-        theme={theme}
-        initial={{ opacity: 0, y: -50, scale: 0.8 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 1, ease: 'easeOut' }}
-      >
-        <Calendar className="header-icon" />
-        Welcome, {userName}
-      </Header>
+    <Background theme={theme}>    
+      <NewCompanyForm />
       <FooterText
         theme={theme}
         initial={{ opacity: 0 }}

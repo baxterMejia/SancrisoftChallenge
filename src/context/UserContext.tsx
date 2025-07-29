@@ -70,10 +70,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   // Effect for loading/initializing users
   useEffect(() => {
-    const stored = localStorage.getItem('users');
-    if (stored) {
+    const stored = localStorage.getItem('users');    
+    if (stored) {        
       setUsers(JSON.parse(stored));
-    } else {
+    } else {        
       const defaultAdmin: User = {
         username: 'admin',
         email: 'admin@qargo.com',
@@ -135,7 +135,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     setUsers(newUsers);
   };
 
-  const authenticateUser = (username: string, password: string): User | undefined => {
+  const authenticateUser = (username: string, password: string): User | undefined => {    
     return users.find(
       (user) =>
         user.username.toLowerCase() === username.toLowerCase() &&

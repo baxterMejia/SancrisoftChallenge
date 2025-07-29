@@ -20,43 +20,30 @@ const API_BASE_URL = "https://client-management-api-demo-ceaxgwadhbawc5dk.canada
 
 const Background = styled.div<StyledThemeProps>`
   min-height: 100vh;
-  background: radial-gradient(
-    circle at top left,
-    ${({ theme }) => theme.bg},
-    ${({ theme }) => theme.navBg},
-    ${({ theme }) => theme.sidebarBg}
-  );
+  background-color: ${({ theme }) => theme.bg}; 
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 2rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: ${({ theme }) => theme.text};
 `;
 
 const LoginCard = styled(motion.div)<StyledThemeProps>`
-  background: rgba(10, 15, 28, 0.85);
-  border-radius: 20px;
-  box-shadow:
-    0 0 20px ${({ theme }) => theme.accent},
-    0 0 40px ${({ theme }) => theme.accent},
-    0 0 60px ${({ theme }) => theme.accent},
-    inset 0 0 10px ${({ theme }) => theme.accent};
-  padding: 3rem 4rem;
-  width: 420px;
+  background: ${({ theme }) => theme.navBg}; // blanco limpio
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06); // sombra sutil
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
   text-align: center;
-  backdrop-filter: blur(10px);
-  position: relative;
-  z-index: 10;
+  border: 1px solid ${({ theme }) => theme.inputBorder};
 `;
 
 const Title = styled(motion.h1)<StyledThemeProps>`
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  text-shadow:
-    0 0 5px ${({ theme }) => theme.accent},
-    0 0 10px ${({ theme }) => theme.accent};
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
   color: ${({ theme }) => theme.text};
+  font-weight: 600;
 `;
 
 const Form = styled.form`
@@ -66,70 +53,51 @@ const Form = styled.form`
 `;
 
 const Input = styled.input<StyledThemeProps>`
-  padding: 0.8rem 1rem;
-  border-radius: 10px;
-  border: none;
-  background: rgba(0, 255, 255, 0.1);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid ${({ theme }) => theme.inputBorder};
+  background: ${({ theme }) => theme.inputBg};
   color: ${({ theme }) => theme.text};
   font-size: 1rem;
-  box-shadow: 0 0 10px ${({ theme }) => theme.accent}55 inset;
-  transition: 0.3s ease;
+  transition: 0.2s ease;
 
   &::placeholder {
-    color: ${({ theme }) => theme.accentHover};
+    color: ${({ theme }) => theme.textFaded};
   }
 
   &:focus {
     outline: none;
-    background: rgba(0, 255, 255, 0.25);
-    box-shadow: 0 0 20px ${({ theme }) => theme.accent}dd inset;
+    border-color: ${({ theme }) => theme.inputFocusBorder};
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.inputFocusBorder}33;
   }
 `;
 
-const Button = styled(motion.button)<StyledThemeProps>` // Changed from styled.button to styled(motion.button)
-  padding: 0.9rem 1rem;
-  border-radius: 15px;
+const Button = styled(motion.button)<StyledThemeProps>`
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
   border: none;
-  background: ${({ theme }) => theme.accent};
-  color: ${({ theme }) => theme.sidebarText};
-  font-weight: 700;
-  font-size: 1.1rem;
+  background: ${({ theme }) => theme.primary};
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
-  box-shadow:
-    0 0 10px ${({ theme }) => theme.accent},
-    0 0 20px ${({ theme }) => theme.accent};
-  transition: 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  transition: background 0.3s ease;
 
   &:hover {
     background: ${({ theme }) => theme.accentHover};
-    box-shadow:
-      0 0 15px ${({ theme }) => theme.accent},
-      0 0 30px ${({ theme }) => theme.accent};
   }
 
   &:disabled {
-    background: #555;
+    background: #ccc;
     cursor: not-allowed;
-    box-shadow: none;
   }
 `;
 
 const PremiumButton = styled(Button)<StyledThemeProps>`
   background: ${({ theme }) => theme.accentHover};
-  color: ${({ theme }) => theme.sidebarText};
-  box-shadow:
-    0 0 10px ${({ theme }) => theme.accent},
-    0 0 20px ${({ theme }) => theme.accent};
 
   &:hover {
-    background: #00e6b3;
-    box-shadow:
-      0 0 15px ${({ theme }) => theme.accent},
-      0 0 30px ${({ theme }) => theme.accent};
+    background: #4338CA;
   }
 `;
 
@@ -229,7 +197,7 @@ export default function LoginPage() {
             margin: '0 auto',
             marginBottom: '1rem',
             borderRadius: '12px',
-            boxShadow: `0 0 20px ${theme.accent}`
+            boxShadow: 'none'
           }}
         />
 

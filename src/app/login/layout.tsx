@@ -2,19 +2,20 @@
 
 import { GlobalStyle } from '@/styles/globals';
 import { ThemeProvider } from '@/context/ThemeContext';
-import { ReactNode } from 'react'; // Import ReactNode
+import { ReactNode } from 'react';
+import { inter } from '@/styles/fonts';
 
 interface AuthLayoutProps {
-  children: ReactNode; // Type the children prop
+  children: ReactNode;
 }
 
 export default function AuthLayout({ children }: AuthLayoutProps) {
   return (
-    <>
-      <ThemeProvider>
+    <ThemeProvider>
+      <div className={inter.className}>
         <GlobalStyle />
         {children}
-      </ThemeProvider>
-    </>
+      </div>
+    </ThemeProvider>
   );
 }
