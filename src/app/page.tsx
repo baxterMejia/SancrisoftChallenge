@@ -1,95 +1,144 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+
+import { useEffect } from 'react';
+import styled, { keyframes } from 'styled-components';
+import { useRouter } from 'next/navigation';
+
+const flyUp = keyframes`
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(0.2deg);
+  }
+  100% {
+    transform: translateY(-12px) rotate(-0.2deg);
+  }
+`;
+
+const flameFlicker = keyframes`
+  0%, 100% {
+    transform: scaleY(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scaleY(1.3);
+    opacity: 0.5;
+  }
+`;
+
+const rotateAround = keyframes`
+  0% {
+    transform: rotate(0deg) translateX(200px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateX(200px) rotate(-360deg);
+  }
+`;
+
+const Container = styled.div`
+  height: 100vh;
+  width: 100%;
+  background: url('/images/Background.jpg') center center / cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: 50%;
+`;
+
+const ContentWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 30px;
+  z-index: 1;
+`;
+
+const RocketWrapper = styled.div`
+  animation: ${flyUp} 0.9s ease-in-out infinite alternate, ${rotateAround} 8s linear infinite;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Tip = styled.div`
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 30px solid #0ff;
+`;
+
+const Body = styled.div`
+  width: 40px;
+  height: 90px;
+  background: #ffffff;
+  border-radius: 10px;
+  position: relative;
+`;
+
+const WingLeft = styled.div`
+  position: absolute;
+  left: -12px;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;
+  border-right: 12px solid #ccc;
+`;
+
+const WingRight = styled.div`
+  position: absolute;
+  right: -12px;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;
+  border-left: 12px solid #ccc;
+`;
+
+const Flame = styled.div`
+  width: 12px;
+  height: 35px;
+  background: linear-gradient(to bottom, #0ff, #f0f, #ff0);
+  border-radius: 50% 50% 0 0;
+  margin-top: 8px;
+  animation: ${flameFlicker} 0.2s infinite;
+`;
+
+const LogoFrame = styled.div`
+  width: 550px;
+  height: 550px;
+  border-radius: 50%;
+  background-color: #001f3f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+`;
+
+const Logo = styled.img`
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+`;
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const router = useRouter();
+    
+  useEffect(() => {
+    router.replace('/login');
+  }, [router]); 
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+  return (
+    <Container>
+      <ContentWrapper>
+        
+      </ContentWrapper>
+    </Container>
   );
 }
