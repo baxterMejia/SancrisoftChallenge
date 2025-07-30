@@ -268,6 +268,7 @@ const Step2ContactPerson: React.FC<Step2ContactPersonProps> = ({
                         onChange={handleChange}
                         className={errors.contactPhone ? 'error' : ''}
                         theme={theme}
+                        maxLength={10}
                         style={{
                             borderLeft: 'none',
                             borderRadius: '0 4px 4px 0',
