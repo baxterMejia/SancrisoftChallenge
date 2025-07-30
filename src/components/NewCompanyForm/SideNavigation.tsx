@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { Theme } from '@/themes/themes'; 
-import { useTheme } from '@/context/ThemeContext'; 
+import { Theme } from '@/themes/themes';
+import { useTheme } from '@/context/ThemeContext';
+import { Check } from 'lucide-react';
 
 interface StyledThemeProps {
   theme: Theme;
@@ -12,7 +13,7 @@ interface SideNavigationProps {
   currentStep: number;
   goToStep: (step: number) => void;
   isMobile: boolean;
-  isFormDisabled?: boolean; 
+  isFormDisabled?: boolean;
   submissionStatus: 'idle' | 'in_progress' | 'success' | 'error';
 }
 
@@ -27,9 +28,13 @@ const NavContainer = styled(motion.nav)<StyledThemeProps>`
 `;
 
 const StepItem = styled(motion.div).withConfig({
-    shouldForwardProp: (prop) =>
-      !['isActive', 'isComplete', 'isClickable'].includes(prop) 
-  })<{ isActive: boolean; isComplete: boolean; isClickable: boolean } & StyledThemeProps>`
+  shouldForwardProp: (prop) =>
+    !['isActive', 'isComplete', 'isClickable'].includes(prop),
+})<{
+  isActive: boolean;
+  isComplete: boolean;
+  isClickable: boolean;
+} & StyledThemeProps>`
   display: flex;
   align-items: center;
   gap: 0.8rem;
@@ -43,25 +48,33 @@ const StepItem = styled(motion.div).withConfig({
   }
 `;
 
-
-
-const StepNumber = styled.div<{ isActive: boolean; isComplete: boolean } & StyledThemeProps>`
+const StepNumber = styled.div<{
+  isActive: boolean;
+  isComplete: boolean;
+} & StyledThemeProps>`
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: ${({ isActive }) => (isActive ? '#4F46E5' : '#F3F4F6')}; /* activo = azul, inactivo = gris */
-  color: ${({ isActive }) => (isActive ? '#fff' : '#6B7280')};
+  background-color: ${({ isActive, isComplete }) =>
+    isActive ? '#4F46E5' : isComplete ? '#10B981' : '#F3F4F6'};
+  color: ${({ isActive, isComplete }) =>
+    isActive || isComplete ? '#fff' : '#6B7280'};
   font-size: 0.875rem;
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: ${({ isActive }) => (isActive ? '0 0 0 4px rgba(99, 102, 241, 0.3)' : 'none')};
-  border: 1px solid ${({ isActive }) => (isActive ? '#4F46E5' : '#D1D5DB')};
+  box-shadow: ${({ isActive }) =>
+    isActive ? '0 0 0 4px rgba(99, 102, 241, 0.3)' : 'none'};
+  border: 1px solid
+    ${({ isActive, isComplete }) =>
+      isActive
+        ? '#4F46E5'
+        : isComplete
+        ? '#10B981'
+        : '#D1D5DB'};
   transition: all 0.2s ease;
 `;
-
-
 
 const StepLabel = styled.span`
   font-size: 16px;
@@ -72,7 +85,6 @@ const StepLabel = styled.span`
     display: none;
   }
 `;
-
 
 const StepsWrapper = styled.div`
   border-radius: 999px;
@@ -86,10 +98,13 @@ const StepsWrapper = styled.div`
   }
 `;
 
-
-
-
-const SideNavigation: React.FC<SideNavigationProps> = ({ currentStep, goToStep, isMobile, isFormDisabled, submissionStatus }) => {
+const SideNavigation: React.FC<SideNavigationProps> = ({
+  currentStep,
+  goToStep,
+  isMobile,
+  isFormDisabled,
+  submissionStatus,
+}) => {
   const { theme } = useTheme();
 
   const steps = [
@@ -104,16 +119,24 @@ const SideNavigation: React.FC<SideNavigationProps> = ({ currentStep, goToStep, 
   };
 
   return (
-    <NavContainer theme={theme} variants={containerVariants} initial="hidden" animate="visible">
+    <NavContainer
+      theme={theme}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       <StepsWrapper>
         {steps.map((step) => {
-          const isComplete = step.number < currentStep || (step.number === currentStep && submissionStatus === 'success');
+          const isActive = step.number === currentStep;
+          const isComplete =
+            step.number < currentStep ||
+            (step.number === currentStep && submissionStatus === 'success');
           const isClickable = !isFormDisabled && step.number <= currentStep;
-  
+
           return (
             <StepItem
               key={step.number}
-              isActive={step.number === currentStep}
+              isActive={isActive}
               isComplete={isComplete}
               isClickable={isClickable}
               theme={theme}
@@ -121,8 +144,16 @@ const SideNavigation: React.FC<SideNavigationProps> = ({ currentStep, goToStep, 
               whileHover={{ scale: isClickable ? 1.05 : 1 }}
               whileTap={{ scale: isClickable ? 0.95 : 1 }}
             >
-              <StepNumber isActive={step.number === currentStep} isComplete={isComplete} theme={theme}>
-                {step.number}
+              <StepNumber
+                isActive={isActive}
+                isComplete={isComplete}
+                theme={theme}
+              >
+                {isComplete && !isActive ? (
+                  <Check size={18} strokeWidth={3} />
+                ) : (
+                  step.number
+                )}
               </StepNumber>
               <StepLabel>{step.label}</StepLabel>
             </StepItem>
@@ -130,7 +161,7 @@ const SideNavigation: React.FC<SideNavigationProps> = ({ currentStep, goToStep, 
         })}
       </StepsWrapper>
     </NavContainer>
-  );  
+  );
 };
 
 export default SideNavigation;
