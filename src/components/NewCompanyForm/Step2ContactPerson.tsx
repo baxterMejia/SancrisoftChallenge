@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useTheme } from '@/context/ThemeContext';
-import { FormHeader, FormGroup, Label, Input, ErrorText, Button, ButtonGroup } from './formStyles'; 
-import { Theme } from '@/themes/themes'; 
+import { FormHeader, FormGroup, Label, Input, ErrorText, Button, ButtonGroup } from './formStyles';
+import { Theme } from '@/themes/themes';
 import { styled } from 'styled-components';
 
 export const countryPhoneCodes = [
@@ -146,8 +146,8 @@ const Step2ContactPerson: React.FC<Step2ContactPersonProps> = ({
         }
         if (!formData.contactPhone) {
             newErrors.contactPhone = 'Phone number is required.';
-        } else if (!/^\+?\d{10,15}$/.test(formData.contactPhone)) {
-            newErrors.contactPhone = 'Invalid phone number. Use 10-15 digits (optional leading +).';
+        } else if (!/^\(\d{3}\)\s\d{3}-\d{4}$/.test(formData.contactPhone)) {
+            newErrors.contactPhone = 'Invalid phone number. Expected format: (555) 123-4567';
         }
         return newErrors;
     };
@@ -260,7 +260,6 @@ const Step2ContactPerson: React.FC<Step2ContactPersonProps> = ({
                     </Select>
 
                     <Input
-                        type="tel"
                         id="contactPhone"
                         name="contactPhone"
                         placeholder="(555) 123-4567"
@@ -268,7 +267,7 @@ const Step2ContactPerson: React.FC<Step2ContactPersonProps> = ({
                         onChange={handleChange}
                         className={errors.contactPhone ? 'error' : ''}
                         theme={theme}
-                        maxLength={10}
+                        maxLength={14}
                         style={{
                             borderLeft: 'none',
                             borderRadius: '0 4px 4px 0',

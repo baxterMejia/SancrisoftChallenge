@@ -169,7 +169,6 @@ const NewCompanyForm = () => {
             if (!contactFirstName) stepErrors.contactFirstName = 'Required';
             if (!contactLastName) stepErrors.contactLastName = 'Required';
             if (!/\S+@\S+\.\S+/.test(contactEmail)) stepErrors.contactEmail = 'Invalid email';
-            if (!/^\+?\d{10,15}$/.test(contactPhone)) stepErrors.contactPhone = 'Invalid phone';
         }
         setErrors(prev => ({ ...prev, [`step${step}`]: stepErrors }));
         return Object.keys(stepErrors).length === 0;
@@ -196,7 +195,7 @@ const NewCompanyForm = () => {
                 firstName: formData.step2.contactFirstName,
                 lastName: formData.step2.contactLastName,
                 email: formData.step2.contactEmail,
-                phone: formData.step2.contactPhone,
+                phone: formData.step2.contactCountryCode + ' ' + formData.step2.contactPhone,
             },
         };  
 
