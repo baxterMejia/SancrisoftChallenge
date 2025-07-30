@@ -11,6 +11,7 @@ import Step2ContactPerson from './Step2ContactPerson';
 import Step3ReviewSubmit from './Step3ReviewSubmit';
 import { FormContainer } from './formStyles';
 import { Theme } from '@/themes/themes';
+import { submitCompany } from '@/services/companyService'; // o '../services/...' según la ubicación
 
 // Styled Components
 const TitleBar = styled.div<{ theme: Theme }>`
@@ -36,10 +37,6 @@ const StatusIndicator = styled(motion.span) <{ status: string; theme: Theme }>`
   border-radius: 8px;
   margin-left: 1rem;
   text-transform: capitalize;
-  background-color: ${({ theme, status }) => theme[status] + '30'};
-  color: ${({ theme, status }) => theme[status]};
-  border: 1px solid ${({ theme, status }) => theme[status]};
-
   @media (max-width: 480px) {
     font-size: 0.8rem;
     padding: 0.2rem 0.6rem;
@@ -81,6 +78,7 @@ interface FormData {
         contactLastName: string;
         contactEmail: string;
         contactPhone: string;
+        contactCountryCode : string;
     };
 }
 
@@ -105,6 +103,7 @@ const initialFormData: FormData = {
         contactLastName: '',
         contactEmail: '',
         contactPhone: '',
+        contactCountryCode: "+1",
     },
 };
 
@@ -133,11 +132,27 @@ const NewCompanyForm = () => {
         }
     }, [formData]);
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => {
         const { name, value } = e.target;
         const step = name in formData.step1 ? 'step1' : 'step2';
-        setFormData(prev => ({ ...prev, [step]: { ...prev[step], [name]: value } }));
-        setErrors(prev => ({ ...prev, [step]: { ...prev[step], [name]: undefined } }));
+
+        setFormData(prev => ({
+            ...prev,
+            [step]: {
+                ...prev[step],
+                [name]: value
+            }
+        }));
+
+        setErrors(prev => ({
+            ...prev,
+            [step]: {
+                ...prev[step],
+                [name]: undefined
+            }
+        }));
     };
 
     const validateStep = (step: number) => {
@@ -167,16 +182,34 @@ const NewCompanyForm = () => {
 
     const submitForm = async () => {
         setStatus('in_progress');
-        setApiMessage('');
-        await new Promise(res => setTimeout(res, 1000));
-        const success = Math.random() > 0.3;
-        if (success) {
+        setApiMessage('');       
+        const formPayload = {
+            name: formData.step1.businessName,
+            type: formData.step1.type,
+            address: {
+                line1: formData.step1.addressLine1,
+                line2: formData.step1.addressLine2,
+                city: formData.step1.city,
+                state: formData.step1.state,
+                zip: formData.step1.zip,
+            },
+            contact: {
+                firstName: formData.step2.contactFirstName,
+                lastName: formData.step2.contactLastName,
+                email: formData.step2.contactEmail,
+                phone: formData.step2.contactPhone,
+            },
+        };  
+
+        const response = await submitCompany(formPayload);         
+      
+        if (response.status === 'ok') {
             setStatus('success');
-            setApiMessage('Success!');
+            setApiMessage(response.message);
         } else {
             setStatus('error');
-            setApiMessage('Submission failed.');
-        }
+            setApiMessage(response.message);
+        }      
     };
 
     const startOver = () => {
@@ -193,7 +226,7 @@ const NewCompanyForm = () => {
             <TitleBar theme={theme}>
                 New Company
                 <StatusIndicator theme={theme} status={status}>{status.replace('_', ' ')}</StatusIndicator>
-            </TitleBar>           
+            </TitleBar>
             <hr></hr>
             <Container>
 

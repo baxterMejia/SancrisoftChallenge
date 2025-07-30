@@ -8,7 +8,6 @@ interface StyledThemeProps {
 
 export const FormContainer = styled(motion.div)<{ theme: Theme }>`
   flex: 1;
-  background-color: ${({ theme }) => theme.card};
   padding: 1rem 2rem 2rem 2rem;
   border-radius: 1rem;
   width: 100%;

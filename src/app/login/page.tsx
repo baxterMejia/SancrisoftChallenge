@@ -15,9 +15,6 @@ interface StyledThemeProps {
   theme: Theme;
 }
 
-const API_BASE_URL = "https://client-management-api-demo-ceaxgwadhbawc5dk.canadacentral-01.azurewebsites.net/api";
-//const API_BASE_URL = "https://localhost:7172/api";
-
 const Background = styled.div<StyledThemeProps>`
   min-height: 100vh;
   background-color: ${({ theme }) => theme.bg}; 

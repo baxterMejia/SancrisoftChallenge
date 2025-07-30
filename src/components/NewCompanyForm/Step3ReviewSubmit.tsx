@@ -6,6 +6,7 @@ import { FormHeader, Button, ButtonGroup, LinkButton, SubmissionMessage } from '
 import { Theme } from '@/themes/themes'; // Adjust path if necessary
 import { motion, AnimatePresence } from 'framer-motion';
 
+
 // Export this interface so it can be used in other files
 export interface StyledThemeProps {
     theme: Theme;
@@ -131,11 +132,12 @@ const Step3ReviewSubmit: React.FC<Step3ReviewSubmitProps> = ({
                         Confirm & Submit →
                     </Button>
                 </ButtonGroup>
-            )}          
+            )}
 
             {(submissionStatus === 'success' || submissionStatus === 'error') && (
                 <AnimatePresence>
                     <SubmissionMessage
+                        key={submissionStatus}
                         theme={theme}
                         success={submissionStatus === 'success'}
                         initial={{ opacity: 0, y: 20 }}

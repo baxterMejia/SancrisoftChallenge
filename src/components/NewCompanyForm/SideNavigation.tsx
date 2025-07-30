@@ -12,7 +12,7 @@ interface SideNavigationProps {
   currentStep: number;
   goToStep: (step: number) => void;
   isMobile: boolean;
-  isFormDisabled?: boolean; // New prop to disable interaction
+  isFormDisabled?: boolean; 
   submissionStatus: 'idle' | 'in_progress' | 'success' | 'error';
 }
 
@@ -26,10 +26,10 @@ const NavContainer = styled(motion.nav)<StyledThemeProps>`
   }
 `;
 
-
-
-
-const StepItem = styled(motion.div)<{ isActive: boolean; isComplete: boolean; isClickable: boolean } & StyledThemeProps>`
+const StepItem = styled(motion.div).withConfig({
+    shouldForwardProp: (prop) =>
+      !['isActive', 'isComplete', 'isClickable'].includes(prop) 
+  })<{ isActive: boolean; isComplete: boolean; isClickable: boolean } & StyledThemeProps>`
   display: flex;
   align-items: center;
   gap: 0.8rem;
@@ -75,7 +75,6 @@ const StepLabel = styled.span`
 
 
 const StepsWrapper = styled.div`
-  background-color: #F9FAFB;
   border-radius: 999px;
   padding: 1.2rem 1rem;
   display: flex;
