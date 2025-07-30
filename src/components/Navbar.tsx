@@ -93,6 +93,7 @@ export default function Navbar({ toggleSidebar, isSidebarOpen, toggleThemeSideba
   const handleLogout = () => {    
     sessionStorage.removeItem('isAuthenticated');
     sessionStorage.removeItem('user');
+    localStorage.clear();
     router.push('/login');
   };
 
