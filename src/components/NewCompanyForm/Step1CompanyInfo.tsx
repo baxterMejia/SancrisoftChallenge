@@ -1,4 +1,3 @@
-// src/components/NewCompanyForm/Step1CompanyInfo.tsx
 import React, { useRef, useEffect } from 'react';
 import { useTheme } from '@/context/ThemeContext';
 import { FormHeader, FormGroup, Label, Input, Select, ErrorText, Button, ButtonGroup } from './formStyles'; // Import shared styles

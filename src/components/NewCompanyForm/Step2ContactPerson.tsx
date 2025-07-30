@@ -1,8 +1,7 @@
-// src/components/NewCompanyForm/Step2ContactPerson.tsx
 import React, { useRef } from 'react';
 import { useTheme } from '@/context/ThemeContext';
-import { FormHeader, FormGroup, Label, Input, ErrorText, Button, ButtonGroup } from './formStyles'; // Import shared styles
-import { Theme } from '@/themes/themes'; // Adjust path if necessary
+import { FormHeader, FormGroup, Label, Input, ErrorText, Button, ButtonGroup } from './formStyles'; 
+import { Theme } from '@/themes/themes'; 
 import { styled } from 'styled-components';
 
 export const countryPhoneCodes = [

@@ -1,4 +1,3 @@
-// src/pages/login.tsx (or src/app/login/page.tsx if using Next.js App Router)
 'use client';
 
 import { useState, useEffect, FormEvent } from 'react'; 
@@ -129,7 +128,7 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isClient, setIsClient] = useState<boolean>(false);
   const router = useRouter();
-  const { authenticateUser } = useUsers(); // Assuming useUsers is correctly typed
+  const { authenticateUser } = useUsers(); 
 
   useEffect(() => {
     setIsClient(true);
@@ -141,18 +140,18 @@ export default function LoginPage() {
     if (sessionStorage.getItem('isAuthenticated') === 'true') {
       router.push('/dashboard');
     }
-  }, [isClient, router]); // Add router to dependency array
+  }, [isClient, router]); 
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => { // Type the event
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => { 
     e.preventDefault();
     setLoginError('');
     setIsLoading(true);
 
     try {
-      // Simulate API call delay
+   
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // Authenticate user using the context function
+      
       const user = authenticateUser(username, password);
 
       if (!user) {
@@ -163,15 +162,14 @@ export default function LoginPage() {
       const loginTime = new Date().toISOString();
       const token = 'token-' + Math.random().toString(36).substring(2);
       sessionStorage.setItem('isAuthenticated', 'true');
-      sessionStorage.setItem('user', user.username); // Assuming user.username is a string
+      sessionStorage.setItem('user', user.username); 
       sessionStorage.setItem('token', token);
       sessionStorage.setItem('loginTime', loginTime);
 
       router.push('/dashboard');
     } catch (error) {
-      // More specific error handling if needed
       console.error("Login error:", error);
-      setLoginError('Hubo un error al iniciar sesión. Intenta de nuevo.');
+      setLoginError('Login Error');
     } finally {
       setIsLoading(false);
     }

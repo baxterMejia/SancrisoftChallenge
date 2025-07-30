@@ -1,4 +1,3 @@
-// src/components/NewCompanyForm/NewCompanyForm.tsx
 'use client';
 
 import React, { useState, useEffect, useCallback, ChangeEvent } from 'react';
@@ -11,9 +10,9 @@ import Step2ContactPerson from './Step2ContactPerson';
 import Step3ReviewSubmit from './Step3ReviewSubmit';
 import { FormContainer } from './formStyles';
 import { Theme } from '@/themes/themes';
-import { submitCompany } from '@/services/companyService'; // o '../services/...' según la ubicación
+import { submitCompany } from '@/services/companyService'; 
 
-// Styled Components
+
 const TitleBar = styled.div<{ theme: Theme }>`
   display: flex;
   justify-content: space-between;
@@ -62,7 +61,7 @@ const Container = styled.div`
 `;
 
 
-// Types
+
 interface FormData {
     step1: {
         businessName: string;
@@ -87,7 +86,7 @@ interface ValidationErrors {
     step2: Partial<FormData['step2']>;
 }
 
-// Initial State
+
 const initialFormData: FormData = {
     step1: {
         businessName: '',

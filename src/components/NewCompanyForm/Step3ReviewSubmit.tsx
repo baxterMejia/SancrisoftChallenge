@@ -1,19 +1,17 @@
-// src/components/NewCompanyForm/Step3ReviewSubmit.tsx
+
 import React from 'react';
 import styled from 'styled-components';
 import { useTheme } from '@/context/ThemeContext';
 import { FormHeader, Button, ButtonGroup, LinkButton, SubmissionMessage } from './formStyles';
-import { Theme } from '@/themes/themes'; // Adjust path if necessary
+import { Theme } from '@/themes/themes'; 
 import { motion, AnimatePresence } from 'framer-motion';
 
-
-// Export this interface so it can be used in other files
 export interface StyledThemeProps {
     theme: Theme;
 }
 
 interface Step3ReviewSubmitProps {
-    formData: any; // Use a more specific type if Step1FormData & Step2FormData are merged
+    formData: any; 
     prevStep: () => void;
     goToStep: (step: number) => void;
     submitForm: () => void;

@@ -1,28 +1,28 @@
-// src/contexts/UserContext.ts (or .tsx if you prefer, but .ts is fine for context files)
+
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 
-// --- 1. Define Interfaces for Data Structures ---
+
 
 export interface User {
   username: string;
   email: string;
-  password?: string; // Password can be optional if not always exposed
+  password?: string; 
 }
 
 export type EntryType = 'note' | 'task';
-export type EntryStatus = 'pending' | 'completed' | null; // Null for notes, or if not yet set
+export type EntryStatus = 'pending' | 'completed' | null; 
 
 export interface BaseEntry {
   id: string;
   type: EntryType;
   name: string;
   description: string;
-  createdAt: string; // ISO string format
+  createdAt: string; 
 }
 
 export interface NoteEntry extends BaseEntry {
   type: 'note';
-  status: null; // Notes typically don't have a status
+  status: null; 
 }
 
 export interface TaskEntry extends BaseEntry {
@@ -33,7 +33,7 @@ export interface TaskEntry extends BaseEntry {
 export type Entry = NoteEntry | TaskEntry;
 
 
-// --- 2. Define the Context Value Interface ---
+
 
 export interface UserContextType {
   users: User[];
@@ -46,10 +46,10 @@ export interface UserContextType {
   entries: Entry[];  
 }
 
-// --- 3. Create the Context with Initial Undefined Value ---
+
 export const UserContext = createContext<UserContextType | undefined>(undefined);
 
-// --- 4. Custom Hook for Consuming the Context ---
+
 export const useUsers = () => {
   const context = useContext(UserContext);
   if (context === undefined) {
@@ -58,7 +58,6 @@ export const useUsers = () => {
   return context;
 };
 
-// --- 5. UserProvider Component ---
 
 interface UserProviderProps {
   children: ReactNode;
@@ -68,7 +67,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [users, setUsers] = useState<User[]>([]);
   const [entries, setEntries] = useState<Entry[]>([]);
 
-  // Effect for loading/initializing users
+  
   useEffect(() => {
     const stored = localStorage.getItem('users');    
     if (stored) {        
@@ -83,14 +82,14 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       localStorage.setItem('users', JSON.stringify([defaultAdmin]));
     }
 
-    // Mock entries for the current week
+    
     const now = new Date();
     const today = now.getDay();
-    // Calculate Monday of the current week (adjusting for Sunday being 0)
+   
     const diffToMonday = today === 0 ? -6 : 1 - today;
     const monday = new Date(now);
     monday.setDate(now.getDate() + diffToMonday);
-    monday.setHours(9, 0, 0, 0); // Set to 9 AM Monday
+    monday.setHours(9, 0, 0, 0); 
 
     const mockEntries: Entry[] = [
       // Notes
@@ -105,14 +104,13 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
     setEntries(mockEntries);
   }, []);
-
-  // Effect for saving users to localStorage whenever 'users' state changes
+  
   useEffect(() => {
     localStorage.setItem('users', JSON.stringify(users));
   }, [users]);
 
 
-  // --- User Management Functions ---
+  
   const addUser = (userData: User) => {
     setUsers((prevUsers) => [...prevUsers, userData]);
   };

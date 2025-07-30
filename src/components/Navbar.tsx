@@ -102,12 +102,7 @@ export default function Navbar({ toggleSidebar, isSidebarOpen, toggleThemeSideba
         <ToggleButton onClick={toggleSidebar} theme={theme}>
           {isSidebarOpen ? <X /> : <Menu />}
         </ToggleButton>
-      </Logo>
-      {/* <ThemeSelector>    
-        <ToggleButton onClick={toggleThemeSidebar} theme={theme}>
-          <Palette />
-        </ToggleButton>
-      </ThemeSelector> */}
+      </Logo>   
 
       <LogoutButton onClick={handleLogout} theme={theme}>
         Log Out
